@@ -5,7 +5,7 @@ function countStudents(path) {
     const data = fs.readFileSync(path, 'utf8'); // Read the CSV file synchronously
 
     // Split the data into lines and filter out empty lines
-    const lines = data.split('\n').filter(line => line.trim() !== '');
+    const lines = data.split('\n').filter((line) => line.trim() !== '');
 
     if (lines.length === 0) {
       console.error('Cannot load the database: The file is empty');
@@ -17,24 +17,23 @@ function countStudents(path) {
     const fieldNames = {};
 
     // Loop through the lines, starting from the second line (index 1)
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i];
-      const [firstName, lastName, age, field] = line.split(',');
+    for (const line of lines.slice(1)) {
+      const [firstName, , , field] = line.split(',');
 
       if (fieldCounts[field]) {
-        fieldCounts[field]++;
+        fieldCounts[field] += 1;
         fieldNames[field].push(firstName);
       } else {
         fieldCounts[field] = 1;
         fieldNames[field] = [firstName];
       }
 
-      students++;
+      students += 1;
     }
 
     console.log(`Number of students: ${students}`);
 
-    for (const field in fieldCounts) {
+    for (const field of Object.keys(fieldCounts)) {
       console.log(`Number of students in ${field}: ${fieldCounts[field]}. List: ${fieldNames[field].join(', ')}`);
     }
   } catch (error) {
@@ -42,4 +41,4 @@ function countStudents(path) {
   }
 }
 
-countStudents('database.csv'); // Call the function with the path to your database file
+export.moduls =
